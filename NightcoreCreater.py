@@ -313,6 +313,7 @@ class Ui_NightcoreCreater(object):
                             check_darwin_ffmpeg = '1'
                         if not check_darwin_ffmpeg == '':
                             sys.exit(1)
+                        self.ffmpeg_check_ok = True
         else:
             self.ffmpeg_check_ok = True
         concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 50).submit(self.ffconvert_main)
