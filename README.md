@@ -17,6 +17,15 @@
 	</ul>
 </div>
 <div>
-	<h2>supported format: m4a, mp3, flac, wav</h2>
-	<h2>output format: m4a only</h2>
+	<h2>Supported Audio Format</h2>
+	<ul>
+		<li>M4A</li>
+		<li>MP3</li>
+		<li>FLAC</li>
+		<li>WAV(not tested)</li>
+	</ul>
+	<h2>Output Format</h2>
+	<ul>
+		<li>M4A Only</li>
+	</ul>
 </div>
