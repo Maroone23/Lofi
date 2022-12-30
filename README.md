@@ -1,6 +1,6 @@
 <div align="center">
 	<a href="https://github.com/CrossDarkrix/NightcoreCreater">
-	<img width="200px" height="200px" alt="ffmpegUpScale" src="https://raw.githubusercontent.com/CrossDarkrix/NightcoreCreater/main/image/NightcoreCreaterIcon"></a>
+	<img width="200px" height="200px" alt="NightcoreCreater" src="https://raw.githubusercontent.com/CrossDarkrix/NightcoreCreater/main/image/NightcoreCreaterIcon"></a>
 </div>
 
 <h2 align="center">NightcoreCreater - Multi Platform Auto Nightcore Create tool -</h2>
