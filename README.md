@@ -16,3 +16,7 @@
 		<li>PySide6</li><br>
 	</ul>
 </div>
+<div>
+	<h2>supported format: m4a, mp3, flac, wav</h2>
+	<h2>output format: m4a only</h2>
+</div>
