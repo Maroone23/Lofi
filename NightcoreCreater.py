@@ -13,19 +13,12 @@ from io import BytesIO
 from PySide6.QtCore import (QCoreApplication, QByteArray, QMetaObject, QRect,
                             QSize, Qt)
 from PySide6.QtGui import (QFont, QIcon,
-                           QImage, QPixmap, QStandardItemModel, QStandardItem)
-from PySide6.QtWidgets import (QApplication, QFrame, QMainWindow, QLabel, QLineEdit, QListView, QProgressBar,
+                           QImage, QPixmap)
+from PySide6.QtWidgets import (QApplication, QMainWindow, QLabel, QLineEdit, QProgressBar,
                                QPushButton, QSizePolicy, QFileIconProvider, QFileDialog)
 
 DragPath = ['']
 DragPath2 = ['']
-NCProcessList = []
-FileList = []
-
-class ProgressListView(QListView):
-    def __init__(self, parent=None):
-        super(ProgressListView, self).__init__(parent)
-
 
 class nightcore(object):
     def __init__(self, filename, ffmpeg_check):
@@ -35,25 +28,25 @@ class nightcore(object):
     def create(self):
         if not self.ffmpeg_check:
             if self.filename.split('.')[-1].lower() == 'm4a':
-                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.m4a', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.m4a', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 try:
                     os.remove(self.filename)
                 except:
                     pass
             if self.filename.split('.')[-1].lower() == 'mp3':
-                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.mp3', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.mp3', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 try:
                     os.remove(self.filename)
                 except:
                     pass
             if self.filename.split('.')[-1].lower() == 'flac':
-                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.flac', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.flac', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 try:
                     os.remove(self.filename)
                 except:
                     pass
             if self.filename.split('.')[-1].lower() == 'wav':
-                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.wav', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/100,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.wav', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                 try:
                     os.remove(self.filename)
                 except:
@@ -149,7 +142,7 @@ class Ui_NightcoreCreater(object):
     def setupUi(self, NightcoreCreater):
         if not NightcoreCreater.objectName():
             NightcoreCreater.setObjectName("NightcoreCreater")
-        NightcoreCreater.resize(1102, 640)
+        NightcoreCreater.resize(1102, 348)
         sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -163,7 +156,7 @@ class Ui_NightcoreCreater(object):
         NightcoreCreater.setStyleSheet("QWidget{color: White;background: #131519}")
         self.FileCompleteProgressBar = QProgressBar(NightcoreCreater)
         self.FileCompleteProgressBar.setObjectName("FileCompleteProgressBar")
-        self.FileCompleteProgressBar.setGeometry(QRect(10, 580, 1081, 51))
+        self.FileCompleteProgressBar.setGeometry(QRect(10, 290, 1081, 51))
         font1 = QFont()
         font1.setFamilies(["Arial"])
         font1.setPointSize(10)
@@ -182,7 +175,7 @@ class Ui_NightcoreCreater(object):
         self.Input.setFrame(False)
         self.Output = dragQLineEdit2(NightcoreCreater)
         self.Output.setObjectName("Output")
-        self.Output.setGeometry(QRect(620, 220, 411, 41))
+        self.Output.setGeometry(QRect(520, 220, 411, 41))
         sizePolicy.setHeightForWidth(self.Output.sizePolicy().hasHeightForWidth())
         self.Output.setSizePolicy(sizePolicy)
         self.Output.setFont(font)
@@ -204,7 +197,7 @@ class Ui_NightcoreCreater(object):
         self.OutputFolder = QPushButton(NightcoreCreater)
         self.OutputFolder.setObjectName("OutputFolder")
         self.OutputFolder.setIcon(QFileIconProvider().icon(QFileIconProvider.Folder).pixmap(QSize(32, 32)))
-        self.OutputFolder.setGeometry(QRect(1040, 220, 41, 41))
+        self.OutputFolder.setGeometry(QRect(941, 220, 41, 41))
         sizePolicy.setHeightForWidth(self.OutputFolder.sizePolicy().hasHeightForWidth())
         self.OutputFolder.setSizePolicy(sizePolicy)
         self.OutputFolder.setFont(font2)
@@ -236,13 +229,6 @@ class Ui_NightcoreCreater(object):
         self.Icon.setGeometry(QRect(60, 50, 125, 125))
         self.Icon.setStyleSheet("QLabel{border: 2px solid red;}")
         self.Icon.setPixmap(QPixmap(QSize(64, 64)).fromImage(QImage.fromData(QByteArray.fromBase64(b'/9j/4AAQSkZJRgABAQAASABIAAD/4QDKRXhpZgAATU0AKgAAAAgABgESAAMAAAABAAEAAAEaAAUAAAABAAAAVgEbAAUAAAABAAAAXgEoAAMAAAABAAIAAAExAAIAAAARAAAAZodpAAQAAAABAAAAeAAAAAAAAABIAAAAAQAAAEgAAAABUGl4ZWxtYXRvciAyLjcuMwAAAASQBAACAAAAFAAAAK6gAQADAAAAAQABAACgAgAEAAAAAQAAAHqgAwAEAAAAAQAAAHoAAAAAMjAyMjoxMjozMCAxMzoxMDo1OAD/4QnFaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA2LjAuMCI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1wOk1ldGFkYXRhRGF0ZT0iMjAyMi0xMi0zMFQxMzoxMTozMSswOTowMCIgeG1wOkNyZWF0b3JUb29sPSJQaXhlbG1hdG9yIDIuNy4zIiB4bXA6Q3JlYXRlRGF0ZT0iMjAyMi0xMi0zMFQxMzoxMDo1OCswOTowMCIvPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg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'))))
-        self.ProcessingListModel = QStandardItemModel(NightcoreCreater)
-        self.ProcessingList = ProgressListView(NightcoreCreater)
-        self.ProcessingList.setObjectName("ProcessingList")
-        self.ProcessingList.setGeometry(QRect(10, 270, 1081, 301))
-        self.ProcessingList.setFont(font)
-        self.ProcessingList.setStyleSheet("QListView{background: Black;color: White;}")
-        self.ProcessingList.setFrameShape(QFrame.NoFrame)
         self.StartButton.setDefault(False)
         self.is_conv_ok = True
         self.InputFolderPath = ''
@@ -287,39 +273,39 @@ class Ui_NightcoreCreater(object):
         self.StartButton.setText('Stop')
         check_ffmpeg = subprocess.Popen('ffmpeg -hide_banner -version', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
         if not check_ffmpeg == '':
-            check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
+            check_ffmpeg2 = subprocess.Popen('{} -hide_banner -version'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
             if not check_ffmpeg2 == '':
                 if platform.system() == 'Windows':
-                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'), exist_ok=True)
                     back_path = os.getcwd()
-                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
                     win_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-win64-gpl.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                     with zipfile.ZipFile(BytesIO(win_ffmpeg)) as ffmpegzip:
-                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                        ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp', 'ffmpeg-master-latest-win64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'))
                     os.chdir(back_path)
-                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
                 if platform.system() == 'Linux':
-                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'), exist_ok=True)
+                    os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'), exist_ok=True)
                     back_path = os.getcwd()
-                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
+                    os.chdir(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
                     linux_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://github.com/BtbN/FFmpeg-Builds/releases/latest/download/ffmpeg-master-latest-linux64-gpl.tar.xz', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                     with open('tmp.tar.xz', 'wb') as f:
                         f.write(linux_ffmpeg)
                     os.remove('tmp.tar.xz')
                     with tarfile.open('tmp.tar.xz', 'r:xz') as ffmpegzip:
-                        ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp') + '/.')
-                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'))
+                        ffmpegzip.extractall(path=os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp') + '/.')
+                    shutil.move(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp', 'ffmpeg-master-latest-linux64-gpl', 'bin'), os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'))
                     os.chdir(back_path)
-                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'tmp'))
-                    os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
+                    shutil.rmtree(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'tmp'))
+                    os.chmod(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), 0o755)
                 if platform.system() == 'Darwin':
                     if not platform.machine() == 'arm64':
-                        os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin'), exist_ok=True)
+                        os.makedirs(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin'), exist_ok=True)
                         darwin_ffmpeg = urllib.request.urlopen(urllib.request.Request('https://evermeet.cx/ffmpeg/ffmpeg-5.1.2.zip', headers={'User-Agent': 'Mozilla/5.0 (Linux; U; Android 8.0; en-la; Nexus Build/JPG991) AppleWebKit/511.2 (KHTML, like Gecko) Version/5.0 Mobile/11S444 YJApp-ANDROID jp.co.yahoo.android.yjtop/4.01.1.5'})).read()
                         with zipfile.ZipFile(BytesIO(darwin_ffmpeg)) as ffmpegzip:
-                            ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin') + '/.')
-                        os.chmod(os.path.join(os.path.expanduser('~'), 'ffmupimg', 'bin', 'ffmpeg'), 0o755)
+                            ffmpegzip.extractall(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin') + '/.')
+                        os.chmod(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), 0o755)
                     else:
                         try:
                             check_darwin_ffmpeg = subprocess.Popen('brew install ffmpeg', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()[1].decode(errors='ignore')
@@ -330,45 +316,7 @@ class Ui_NightcoreCreater(object):
                         self.ffmpeg_check_ok = True
         else:
             self.ffmpeg_check_ok = True
-        concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 999999).submit(self.ffconvert_main)
-
-    def ffModel(self):
-        for f in self.findAudioFile(self.OutputFolderPath):
-            file1 = f.replace(os.sep, '/')
-            if os.path.isfile('{}'.format(file1.split('/')[-1])):
-                try:
-                    if '{}'.format(file1.split('/')[-1]).split('.')[-1].lower() == 'm4a':
-                        item = QStandardItem('{}'.format(file1.split('/')[-1]))
-                        item.setCheckable(False)
-                        item.setCheckState(Qt.Unchecked)
-                        self.ProcessingListModel.appendRow(item)
-                except:
-                    pass
-                try:
-                    if '{}'.format(file1.split('/')[-1]).split('.')[-1].lower() == 'mp3':
-                        item = QStandardItem('{}'.format(file1.split('/')[-1]))
-                        item.setCheckable(False)
-                        item.setCheckState(Qt.Unchecked)
-                        self.ProcessingListModel.appendRow(item)
-                except:
-                    pass
-                try:
-                    if '{}'.format(file1.split('/')[-1]).split('.')[-1].lower() == 'flac':
-                        item = QStandardItem('{}'.format(file1.split('/')[-1]))
-                        item.setCheckable(False)
-                        item.setCheckState(Qt.Unchecked)
-                        self.ProcessingListModel.appendRow(item)
-                except:
-                    pass
-                try:
-                    if '{}'.format(file1.split('/')[-1]).split('.')[-1].lower() == 'wav':
-                        item = QStandardItem('{}'.format(file1.split('/')[-1]))
-                        item.setCheckable(False)
-                        item.setCheckState(Qt.Unchecked)
-                        self.ProcessingListModel.appendRow(item)
-                except:
-                    pass
-
+        concurrent.futures.ThreadPoolExecutor(os.cpu_count() * 50).submit(self.ffconvert_main)
 
     def ffconvert_main(self):
         self.FileCompleteProgressBar.setValue(0)
@@ -391,12 +339,8 @@ class Ui_NightcoreCreater(object):
                 shutil.rmtree(os.path.join(self.OutputFolderPath, outputdir_name))
                 workpath = os.getcwd()
                 self.TotalFiles = self.detect_totalfiles(workpath)
-                MC = multiprocessing.Process(target=self.ffModel(), daemon=True)
-                MC.start()
-                MC.join()
-                MC.terminate()
-                self.ProcessingList.setModel(self.ProcessingListModel)
-                for c, file1 in enumerate(self.findAudioFile(self.OutputFolderPath)):
+                NCProcessList = []
+                for file1 in self.findAudioFile(self.OutputFolderPath):
                     file1 = file1.replace(os.sep, '/')
                     if self.is_conv_ok:
                         if os.path.exists(os.path.dirname(file1)):
@@ -407,21 +351,14 @@ class Ui_NightcoreCreater(object):
                             NC = nightcore(file1.split('/')[-1], self.ffmpeg_check_ok)
                             NCProcess = multiprocessing.Process(target=NC.create, daemon=True)
                             NCProcess.start()
-                            NCProcess.join()
-                            NCProcess.terminate()
-                            try:
-                                items = self.ProcessingListModel.item(c)
-                            except:
-                                items = None
-                            try:
-                                if not items == None:
-                                    multiprocessing.Process(target=items.setCheckState(Qt.Checked), daemon=True).start()
-                            except:
-                                pass
-                            self.FileCompleteProgressBar.setValue(min((c / self.TotalFiles) * 100.0, 100.0))
+                            NCProcessList.append(NCProcess)
                         os.chdir(workpath)
                     else:
                         break
+                for c, p in enumerate(NCProcessList):
+                    p.join()
+                    p.terminate()
+                    self.FileCompleteProgressBar.setValue(min((c / self.TotalFiles) * 100.0, 100.0))
                 os.chdir(back_path)
                 self.StartButton.setChecked(False)
                 self.StartButton.setText('Start')
