@@ -1,5 +1,7 @@
 import concurrent.futures
 import multiprocessing
+import mutagen.mp4
+import mutagen.mp3
 import os
 import platform
 import shutil
@@ -24,6 +26,75 @@ class nightcore(object):
     def __init__(self, filename, ffmpeg_check):
         self.filename = filename
         self.ffmpeg_check = ffmpeg_check
+
+    def sample_rate_check(self):
+        if self.filename.split('.')[-1].lower() == 'm4a':
+            if mutagen.mp4.MP4(self.filename).info.sample_rate == 48000:
+                self.create()
+            else:
+                self.create2()
+        if self.filename.split('.')[-1].lower() == 'mp3':
+            if mutagen.mp3.MP3(self.filename).info.sample_rate == 44100:
+                self.create()
+            else:
+                self.create2()
+        if not self.filename.split('.')[-1].lower() == 'mp3' or not self.filename.split('.')[-1].lower() == 'm4a':
+            self.create()
+
+    def create2(self):
+        if not self.ffmpeg_check:
+            if self.filename.split('.')[-1].lower() == 'm4a':
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.m4a', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'mp3':
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.mp3', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'flac':
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.flac', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'wav':
+                subprocess.run('{} -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(os.path.join(os.path.expanduser('~'), 'ffmpeg_bin', 'bin', 'ffmpeg'), self.filename, self.filename.replace('.wav', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+        else:
+            if self.filename.split('.')[-1].lower() == 'm4a':
+                subprocess.run('ffmpeg -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(self.filename, self.filename.replace('.m4a', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'mp3':
+                subprocess.run('ffmpeg -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(self.filename, self.filename.replace('.mp3', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'flac':
+                subprocess.run('ffmpeg -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(self.filename, self.filename.replace('.flac', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+            if self.filename.split('.')[-1].lower() == 'wav':
+                subprocess.run('ffmpeg -i "{}" -map_metadata -1 -af asetrate=44100*120/52.5,atempo=1.0083 -vn -acodec aac "{} (nightcore).m4a"'.format(self.filename, self.filename.replace('.wav', '')), shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                try:
+                    os.remove(self.filename)
+                except:
+                    pass
+
+
+
 
     def create(self):
         if not self.ffmpeg_check:
@@ -349,7 +420,7 @@ class Ui_NightcoreCreater(object):
                             os.chdir(os.path.dirname(os.path.abspath(file1)))
                         if not '(nightcore)' in file1.split('/')[-1:][0]:
                             NC = nightcore(file1.split('/')[-1], self.ffmpeg_check_ok)
-                            NCProcess = multiprocessing.Process(target=NC.create, daemon=True)
+                            NCProcess = multiprocessing.Process(target=NC.sample_rate_check, daemon=True)
                             NCProcess.start()
                             NCProcessList.append(NCProcess)
                         os.chdir(workpath)
@@ -371,9 +442,9 @@ class Ui_NightcoreCreater(object):
             self.ConvertPause()
 
     def retranslateUi(self, NightcoreCreater):
-        NightcoreCreater.setWindowTitle(QCoreApplication.translate("NightcoreCreater", "Nightcore Creater", None))
-        self.StartButton.setText(QCoreApplication.translate("NightcoreCreater", "Start", None))
-        self.Title.setText(QCoreApplication.translate("NightcoreCreater", "Nightcore Creater", None))
+        NightcoreCreater.setWindowTitle("Nightcore Creater")
+        self.StartButton.setText("Start")
+        self.Title.setText("Nightcore Creater")
         self.Icon.setText("")
 
 def main():
