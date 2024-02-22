@@ -29,15 +29,15 @@ class nightcore(object):
 
     def sample_rate_check(self):
         if self.filename.split('.')[-1].lower() == 'm4a':
-            if mutagen.mp4.MP4(self.filename).info.sample_rate == 48000:
-                self.create()
-            else:
+            if mutagen.mp4.MP4(self.filename).info.sample_rate <= 48001:
                 self.create2()
+            else:
+                self.create()
         if self.filename.split('.')[-1].lower() == 'mp3':
-            if mutagen.mp3.MP3(self.filename).info.sample_rate == 44100:
-                self.create()
-            else:
+            if mutagen.mp3.MP3(self.filename).info.sample_rate <= 44101:
                 self.create2()
+            else:
+                self.create()
         if not self.filename.split('.')[-1].lower() == 'mp3' or not self.filename.split('.')[-1].lower() == 'm4a':
             self.create()
 
@@ -92,9 +92,6 @@ class nightcore(object):
                     os.remove(self.filename)
                 except:
                     pass
-
-
-
 
     def create(self):
         if not self.ffmpeg_check:
