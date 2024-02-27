@@ -8,12 +8,14 @@
 	<h2>Build Requirement Modules</h2>
 	<ul>
 		<li>PySide6</li><br>
+		<li>Mutagen</li><br>
 	</ul>
 </div>
 <div>
 	<h2>ビルドに必要なモジュール</h2>
 	<ul>
 		<li>PySide6</li><br>
+		<li>Mutagen</li><br>
 	</ul>
 </div>
 <div>
