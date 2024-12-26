@@ -7,4 +7,4 @@ healthcheckPath = "/"
 healthcheckTimeout = 100
 
 [nixpacks]
-aptPkgs = ["ffmpeg"]
+aptPkgs = ["ffmpeg", "libavcodec-extra"]
