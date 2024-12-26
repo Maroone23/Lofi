@@ -3,11 +3,11 @@ builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "gunicorn app:app"
+startCommand = "gunicorn app:app --timeout 600 --workers 2 --threads 4"
 restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 5
 healthcheckPath = "/"
-healthcheckTimeout = 100
+healthcheckTimeout = 600
 
 [nixpacks]
 aptPkgs = ["ffmpeg", "libavcodec-extra"]

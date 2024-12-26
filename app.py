@@ -18,9 +18,14 @@ logger = logging.getLogger(__name__)
 UPLOAD_FOLDER = tempfile.gettempdir()
 ALLOWED_EXTENSIONS = {'mp3', 'wav', 'ogg'}
 
+# Increase maximum content length to 500MB
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max file size
+app.config['MAX_CONTENT_LENGTH'] = 500 * 1024 * 1024  # 500MB max file size
 app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+# Set server timeout to 10 minutes
+app.config['PERMANENT_SESSION_PERMANENT'] = True
+app.config['PERMANENT_SESSION_TIMEOUT'] = 600
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
