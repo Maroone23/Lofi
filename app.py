@@ -1,4 +1,4 @@
-from flask import Flask, request, send_file, jsonify
+from flask import Flask, request, send_file, jsonify, render_template
 from flask_cors import CORS
 import os
 from werkzeug.utils import secure_filename
@@ -15,6 +15,7 @@ ALLOWED_EXTENSIONS = {'mp3', 'wav', 'ogg'}
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024  # 100MB max file size
+app.config['TEMPLATES_AUTO_RELOAD'] = True
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -28,24 +29,7 @@ def check_ffmpeg():
 
 @app.route('/')
 def home():
-    return """
-    <html>
-        <head>
-            <title>Nightcore Creator</title>
-            <style>
-                body { font-family: Arial, sans-serif; margin: 40px; }
-                h1 { color: #333; }
-                .container { max-width: 800px; margin: 0 auto; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <h1>Welcome to Nightcore Creator</h1>
-                <p>Use the /convert endpoint to create nightcore versions of your audio files.</p>
-            </div>
-        </body>
-    </html>
-    """
+    return render_template('index.html')
 
 @app.route('/convert', methods=['POST'])
 def convert_to_nightcore():
