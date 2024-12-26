@@ -26,6 +26,27 @@ def check_ffmpeg():
     except FileNotFoundError:
         return False
 
+@app.route('/')
+def home():
+    return """
+    <html>
+        <head>
+            <title>Nightcore Creator</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 40px; }
+                h1 { color: #333; }
+                .container { max-width: 800px; margin: 0 auto; }
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <h1>Welcome to Nightcore Creator</h1>
+                <p>Use the /convert endpoint to create nightcore versions of your audio files.</p>
+            </div>
+        </body>
+    </html>
+    """
+
 @app.route('/convert', methods=['POST'])
 def convert_to_nightcore():
     if not check_ffmpeg():
